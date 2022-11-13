@@ -6,10 +6,11 @@ import { TextArea } from "../../components/TextArea.jsx"
 import { TagInput } from "../../components/TagInput.jsx"
 import { Button } from "../../components/Button.jsx"
 import { useState } from "react"
+import { api } from "../../services/api.js"
 
 export function CreateMovie() {
   const [title, setTitle] = useState("")
-  const [stars, setStars] = useState(0)
+  const [rating, setRating] = useState(0)
   const [description, setDescription] = useState("")
   const [tags, setTags] = useState([])
   const [newTag, setNewTag] = useState("")
@@ -20,10 +21,14 @@ export function CreateMovie() {
     setNewTag("")
   }
 
-  function handleSubmit() {
-    console.table({
+  function handleRemoveTag(tag) {
+    setTags(prevState => prevState.filter(item => item !== tag))
+  }
+
+  async function handleNewMovie() {
+    await api.post("/movienotes", {
       title,
-      stars,
+      rating,
       description,
       tags
     })
@@ -42,6 +47,7 @@ export function CreateMovie() {
               placeholder="Título" 
               pd="true"
               onChange={(e) => setTitle(e.target.value)}
+              autoFocus
             />
 
             <Input 
@@ -50,11 +56,14 @@ export function CreateMovie() {
               min="0" 
               max="5" 
               pd="true" 
-              onChange={(e) => setStars(Number(e.target.value))}
+              onChange={(e) => setRating(Number(e.target.value))}
             />
           </div >
 
-          <TextArea placeholder="Descrição" />
+          <TextArea 
+            placeholder="Descrição"
+            onChange={(e) => setDescription(e.target.value)}
+          />
 
           <h3>Marcadores</h3>
           <div className="tags-wrapper">
@@ -64,7 +73,7 @@ export function CreateMovie() {
                   <TagInput 
                     isNew={false}
                     key={String(index)}
-                    onClick={() => {}}
+                    onClick={() => handleRemoveTag(tag)}
                     value={tag}
                     size={String(tag.length)}
                   />
@@ -87,7 +96,7 @@ export function CreateMovie() {
             <Button className="button-del" title="Excluir" />
             <Button 
               title="Salvar alterações"
-              onClick={handleSubmit}
+              onClick={handleNewMovie}
             />
           </div>
         </form>
