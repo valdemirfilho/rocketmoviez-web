@@ -7,8 +7,11 @@ import { TagInput } from "../../components/TagInput.jsx"
 import { Button } from "../../components/Button.jsx"
 import { useState } from "react"
 import { api } from "../../services/api.js"
+import { useNavigate } from "react-router-dom"
 
 export function CreateMovie() {
+  const navigate = useNavigate()
+
   const [title, setTitle] = useState("")
   const [rating, setRating] = useState(0)
   const [description, setDescription] = useState("")
@@ -32,6 +35,9 @@ export function CreateMovie() {
       description,
       tags
     })
+
+    alert("Filme adicionado com sucesso!")
+    navigate("/")
   }
 
   return (
