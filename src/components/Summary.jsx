@@ -1,10 +1,10 @@
 import styled from "styled-components"
-import {Stars} from "./Stars.jsx"
+import { Stars } from "./Stars.jsx"
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.BLACK_PINK_SALMON};
   width: 100%;
-  padding: 32px;
+  padding: 16px 24px;
   border-radius: 16px;
 
   > h2 {
@@ -33,14 +33,45 @@ const Container = styled.div`
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical
   }
+
+  > div.tags-wrapper {
+    margin-top: 16px;
+    margin-bottom: 0;
+    display: flex;
+    height: 20px;
+    gap: 8px;
+    align-items: center;
+
+    > span {
+      width: fit-content; 
+      white-space: nowrap;
+      
+      padding: 5px 10px;
+      background-color: ${({ theme }) => theme.PINK_SALMON_200};
+      color: ${({ theme }) => theme.BLACK};
+
+      font-size: 12px;
+      font-family: 'Roboto';
+      border-radius: 8px;
+    }
+  }
 `
 
-export function Summary({ title, rating, children }) {
+export function Summary({ title, rating, children, tags }) {
   return ( 
     <Container>
       <h2>{ title }</h2>
       <Stars rating={rating} />
       <p>{ children }</p>
+      <div className="tags-wrapper">
+      {
+        tags ? tags.map((tag, index) => {
+          return (
+            <span key={index}>{ tag.name }</span>
+          )
+        }) : null
+      }
+      </div>
     </Container>
    )
 }

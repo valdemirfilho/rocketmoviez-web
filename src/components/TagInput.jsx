@@ -10,19 +10,24 @@ const Container = styled.div`
   border-radius: 10px;
   padding-right: 16px;
 
+  &:focus-within {
+    border-color: ${({ theme }) => theme.PINK_SALMON_200};
+  }
+
   > input {
     height: 56px; 
     background: transparent;
     border: none;
+    outline: none;
     color: ${({ theme }) => theme.WHITE};
     padding-left: 12px;
-    outline: none;
     font-size: 14px;
     font-family: "Roboto Mono";
 
     &::placeholder {
       color: ${({ theme }) => theme.LIGHT_GRAY};
     } 
+
   }
 
   > button {
@@ -61,7 +66,8 @@ export function TagInput({ isNew, value, onClick, onInput, ...rest }) {
 
       <button 
         type="button"
-        onClick={() => value !== "" ? onClick() : null} 
+        // onClick={() => value !== "" ? onClick(value) : null} 
+        onClick={onClick} 
       >
         { isNew ? <FiPlus /> : <FiX /> }
       </button>

@@ -13,11 +13,13 @@ const Container = styled.header`
 
   > div {
     height: 100%;
+    width: 95%;
     max-width: 1100px;
     margin: 0 auto;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
     align-items: center;
-    justify-content: space-between;
 
     h1 {
     font-size: 24px;
@@ -26,13 +28,24 @@ const Container = styled.header`
     }
 
     input {
-      width: 640px;
+      width: 100%;
       height: 56px;
       background-color: ${({ theme }) => theme.MEDIUM_GRAY};
       color: ${({ theme }) => theme.WHITE};
       border: none;
-      padding: 24px;
+      outline: none; 
+      padding: 8px 24px;
       border-radius: 10px;
+
+      &:focus-within {
+        outline: 1px solid ${({ theme }) => theme.PINK_SALMON_200};
+      }
+    }
+  }
+
+  @media (max-width: 500px) {
+    > div input {
+      display: none;
     }
   }
 `
@@ -40,6 +53,7 @@ const Container = styled.header`
 const Profile = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-end;
 
   > div {
     display: flex;
@@ -64,7 +78,9 @@ export function Header() {
   return (
     <Container>
       <div>
-        <h1>RocketMoviez</h1>
+        <Link to="/">
+          <h1>RocketMoviez</h1>
+        </Link>
         <input type="text" placeholder="Pesquisar por título"></input>
         <Profile>
           <div>

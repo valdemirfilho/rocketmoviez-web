@@ -19,7 +19,11 @@ export function CreateMovie() {
   const [newTag, setNewTag] = useState("")
 
   function handleAddTag() {
-    if (newTag === "") return
+    if (newTag === "") {
+      alert("Preencha o valor do marcador!")
+      return
+    }
+
     setTags(prevState => [...prevState, newTag] )
     setNewTag("")
   }
@@ -29,6 +33,18 @@ export function CreateMovie() {
   }
 
   async function handleNewMovie() {
+    const ratingValues = [0, 1, 2, 3, 4, 5]
+
+    if (!title) {
+      alert("Título não pode ser vazio")
+      return
+    }
+
+    if (!ratingValues.includes(Number(rating))) {
+      alert("Nota não pode ser vazio")
+      return
+    }
+
     await api.post("/movienotes", {
       title,
       rating,
@@ -53,6 +69,7 @@ export function CreateMovie() {
               placeholder="Título" 
               pd="true"
               onChange={(e) => setTitle(e.target.value)}
+              required
               autoFocus
             />
 
@@ -63,6 +80,7 @@ export function CreateMovie() {
               max="5" 
               pd="true" 
               onChange={(e) => setRating(Number(e.target.value))}
+              required
             />
           </div >
 

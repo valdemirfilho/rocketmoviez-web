@@ -2,9 +2,10 @@ import styled from "styled-components"
 
 export const Container = styled.div`
   width: 100%;
+  margin: 0 auto;
   
   main {
-    width: 100%;
+    width: 95%;
     max-width: 1100px;
     margin: 40px auto 0 auto;
 

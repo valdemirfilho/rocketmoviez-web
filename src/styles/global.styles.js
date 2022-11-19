@@ -28,7 +28,6 @@ export default createGlobalStyle`
     background-color: ${({ theme }) => theme.DARK_GRAY};
     color: ${({ theme }) => theme.WHITE}; 
     -webkit-font-smoothing: antialiased;
-    padding: 20px;
   }
 
   body, input, button, textarea {
