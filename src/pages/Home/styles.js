@@ -3,6 +3,7 @@ import styled from "styled-components"
 export const Container = styled.div`
   width: 100%;
   margin: 0 auto;
+  height: 100vh; 
 
   main {
     grid-area: content;
@@ -41,7 +42,8 @@ export const Container = styled.div`
   }
 
   .summary-wrapper {
-    max-height: 600px;
+    cursor: pointer;
+    max-height: 660px;
     display: grid;
     gap: 24px;
     overflow-y: auto;

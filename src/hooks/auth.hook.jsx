@@ -4,16 +4,16 @@ import { api } from "../services/api.js";
 const AuthContext = createContext({})
 
 function AuthProvider({ children }) {
-  const [ data, setData ] = useState({ })
+  const [data, setData] = useState({})
 
   async function signIn({ email, password }) {
     try {
       const response = await api.post("/sessions", { email, password })
-      const { user, token } = response.data 
-      
+      const { user, token } = response.data
+
       localStorage.setItem("@rocketmoviez:user", JSON.stringify(user))
       localStorage.setItem("@rocketmoviez:token", token)
-      
+
       // api.defaults.headers.authorization = `Bearer ${token}`
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`
 
@@ -31,28 +31,36 @@ function AuthProvider({ children }) {
   async function logOut() {
     localStorage.removeItem("@rocketmoviez:token")
     localStorage.removeItem("@rocketmoviez:user")
-    
-    setData({ })
+
+    setData({})
   }
-  
+
   useEffect(() => {
     const token = localStorage.getItem("@rocketmoviez:token")
     const user = localStorage.getItem("@rocketmoviez:user")
-    
-    if (token && user) {
-      // api.defaults.headers.authorization = `Bearer ${token}`
-      api.defaults.headers.common["Authorization"] = `Bearer ${token}`
 
-      setData({ 
-        user: JSON.parse(user), 
-        token 
-      })
+    if (token && user) {
+      // check jwt expiration
+      const decodedJWT = JSON.parse(window.atob(token.split(".")[1]))
+
+      if (decodedJWT.exp * 1000 < Date.now()) {
+        logOut()
+      } else {
+        console.log("passei aqui")
+        // api.defaults.headers.authorization = `Bearer ${token}`
+        api.defaults.headers.common["Authorization"] = `Bearer ${token}`
+
+        setData({
+          user: JSON.parse(user),
+          token
+        })
+      }
     }
   }, [])
 
   return (
     <AuthContext.Provider value={{ signIn, logOut, user: data.user }}>
-      { children }
+      {children}
     </AuthContext.Provider>
   )
 }

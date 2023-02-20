@@ -8,11 +8,12 @@ import { api } from "../../services/api.js"
 import { useNavigate } from "react-router-dom"
 
 export function SignUp() {
-  const [name, setName] = useState(" ")
-  const [email, setEmail] = useState(" ")
-  const [password, setPassword] = useState(" ")
+  const [name, setName] = useState(null)
+  const [email, setEmail] = useState(null)
+  const [password, setPassword] = useState(null)
 
   const navigate = useNavigate()
+
   async function handleSignUp() {
     if (!name || !email || !password) {
       return alert("Preencha todos os campos")
@@ -38,37 +39,38 @@ export function SignUp() {
           <h1>RocketMoviez</h1>
           <p>Aplicação para acompanhar tudo que assistir.</p>
         </div>
+
         <h2>Crie sua conta</h2>
         <form>
-          <Input 
-            type="text" 
-            placeholder="Nome" 
+          <Input
+            type="text"
+            placeholder="Nome"
             icon={FiUser}
             onChange={e => setName(e.target.value)}
           />
 
-          <Input 
-            type="email" 
-            placeholder="E-mail" 
+          <Input
+            type="email"
+            placeholder="E-mail"
             icon={FiMail}
             onChange={e => setEmail(e.target.value)}
           />
 
-          <Input 
-            type="password" 
-            placeholder="Senha" 
+          <Input
+            type="password"
+            placeholder="Senha"
             icon={FiLock}
             autoComplete="off"
             onChange={e => setPassword(e.target.value)}
           />
 
-          <Button 
-            title="Cadastrar"
-            onClick={handleSignUp}
-          />
-
-          <TextButton name="Voltar para o login" icon to="/" />
         </form>
+        <Button
+          title="Cadastrar"
+          onClick={handleSignUp}
+        />
+
+        <TextButton name="Voltar para o login" to="/" icon />
       </div>
       <div className="img-wrapper">
 

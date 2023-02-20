@@ -24,6 +24,11 @@ export default createGlobalStyle`
     border: 3px solid ${({ theme }) => theme.DARK_GRAY};
   }
 
+  ::selection {
+    background-color: ${({ theme }) => theme.PINK_SALMON_100};
+    color: ${({ theme }) => theme.DARK_GRAY};
+  }
+
   body {
     background-color: ${({ theme }) => theme.DARK_GRAY};
     color: ${({ theme }) => theme.WHITE}; 
@@ -36,6 +41,7 @@ export default createGlobalStyle`
 
   a {
     text-decoration: none;
+    color: inherit;
   }
 
   button, a {

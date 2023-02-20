@@ -20,9 +20,9 @@ const Container = styled.button`
 
 export function Button({ title, icon: Icon, ...rest }) {
   return (
-    <Container type="button" {...rest}>
-      { Icon && <Icon size={24} /> }
-      { title }
+    <Container {...rest}>
+      {Icon && <Icon size={24} />}
+      {title}
     </Container>
   )
 }

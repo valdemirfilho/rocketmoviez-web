@@ -3,6 +3,7 @@ import { Home } from "../pages/Home"
 import { MoviePreview } from "../pages/MoviePreview"
 import { Profile } from "../pages/Profile"
 import { CreateMovie } from "../pages/CreateMovie"
+import { SignIn } from "../pages/SignIn"
 
 export function AppRoutes() {
   return (
@@ -10,7 +11,7 @@ export function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/createmovie" element={<CreateMovie />} />
-      <Route path="/moviepreview" element={<MoviePreview />} />
+      <Route path="/movie/:id" element={<MoviePreview />} />
     </Routes>
   )
 }

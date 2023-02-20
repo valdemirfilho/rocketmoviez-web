@@ -16,6 +16,18 @@ export const Container = styled.div`
     }
   }
 
+  .form-container-inputs {
+    width: 100%;
+  }
+
+  .form-container {
+    display: flex;
+    gap: 20px;
+  }
+
+  .wrapper-image {
+  }
+
   .col-2 {
     display: flex;
     gap: 40px;
@@ -46,6 +58,4 @@ export const Container = styled.div`
     gap: 40px;
 
   }
-
-
 `

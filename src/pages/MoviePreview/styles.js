@@ -10,15 +10,23 @@ export const Container = styled.div`
   grid-template-areas:
   "header"
   "content";
+  position: relative;
+  overflow: hidden;
 
   > main {
     grid-area: content;
-    width: 95%;
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 0 15px 0 2px;
+    width: 100vw;
+    margin: 0 auto;
+    padding: 40px 15px 40px 15px;
     overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    background: linear-gradient(180deg, hsla(265, 5%, 10%, 1) 1%, rgba(0,0,0,0.1) 100%);
 
+    .wrapper {
+      max-width: 1100px;
+      margin: auto;
+    }
+    
     .title-and-rating {
       display: flex;
       align-items: center;
@@ -72,6 +80,16 @@ export const Container = styled.div`
       margin-bottom: 24px;
     }
 
-
+    video {
+      position: absolute;
+      width: auto;
+      height: auto;
+      min-height: 100%;
+      min-width: 100%;
+      top: calc(50% + 120px);
+      left: 50%;
+      z-index: -1;
+      transform: translate(-50%, -50%);
+    }
   }
 `

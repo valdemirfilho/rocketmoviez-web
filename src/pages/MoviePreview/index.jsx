@@ -4,35 +4,70 @@ import { TextButton } from "../../components/TextButton.jsx"
 import { Stars } from "../../components/Stars.jsx"
 import { BsClock } from "react-icons/bs"
 import { ProfilePicture } from "../../components/ProfilePicture.jsx"
+import { useAuth } from "../../hooks/auth.hook.jsx"
+import { useState, useEffect } from "react"
+import { api } from "../../services/api.js"
+import { useParams } from "react-router-dom"
 
 export function MoviePreview() {
+  const { user } = useAuth()
+  const params = useParams()
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await api.get(`/movienotes/${params.id}`)
+      setData(response.data)
+    }
+
+    fetchData()
+  }, [])
+
+  function formatDateTime(dateString) {
+    const [date, time] = dateString.split("T")
+    const [year, month, day] = date.split("-")
+    const [hours, minutes, _] = time.split(":")
+    return `${day}/${month}/${year} às ${hours}:${minutes}`
+  }
+
   return (
     <Container>
-      <Header />
-      <main>
-        <TextButton name="Voltar" icon to="/" />
-        <div className="title-and-rating">
-          <h2>Details</h2>
-          <Stars rating="2" />
-        </div>
-        <div className="author-datetime">
-          <ProfilePicture src="https://github.com/valdemirfilho.png" size="20" alt="Valdemir" />
-          <span>Por Valdemir Filho</span>
-          <BsClock />
-          <span>23/05/22 às 08:00</span>
-        </div>
-        <div className="tags">
-          <span>Ficção Científica</span>
-          <span>Drama</span>
-          <span>Família</span>
-        </div>
-        <div className="description">
-          <p>
-            Pragas nas colheitas fizeram a civilização humana regredir para uma sociedade agrária em futuro de data desconhecida. Cooper, ex-piloto da NASA, tem uma fazenda com sua família. Murphy, a filha de dez anos de Cooper, acredita que seu quarto está assombrado por um fantasma que tenta se comunicar com ela. Pai e filha descobrem que o "fantasma" é uma inteligência desconhecida que está enviando mensagens codificadas através de radiação gravitacional, deixando coordenadas em binário que os levam até uma instalação secreta da NASA liderada pelo professor John Brand. O cientista revela que um buraco de minhoca foi aberto perto de Saturno e que ele leva a planetas que podem oferecer condições de sobrevivência para a espécie humana. As "missões Lázaro" enviadas anos antes identificaram três planetas potencialmente habitáveis orbitando o buraco negro Gargântua: Miller, Edmunds e Mann – nomeados em homenagem aos astronautas que os pesquisaram. Brand recruta Cooper para pilotar a nave espacial Endurance e recuperar os dados dos astronautas; se um dos planetas se mostrar habitável, a humanidade irá seguir para ele na instalação da NASA, que é na realidade uma enorme estação espacial. A partida de Cooper devasta Murphy.
-          </p>
+      <Header user={user} />
+      {
+        data &&
+        <main>
+          <div className="wrapper">
+            <TextButton name="Voltar" icon to="/" />
+            <div className="title-and-rating">
+              <h2>{data.title}</h2>
+              <Stars rating={data.rating} />
+            </div>
+            <div className="author-datetime">
+              <ProfilePicture src="https://github.com/valdemirfilho.png" size="20" alt="Valdemir" />
+              <span>Por {user.name}</span>
+              <BsClock />
+              <span>{formatDateTime(data.created_at)}</span>
+            </div>
 
-        </div>
-      </main>
+            <div className="tags">
+              {
+                data.movie_tags.map((tag, index) => {
+                  return <span key={index}>{tag.name}</span>
+                })
+              }
+            </div>
+
+            <div className="description">
+              <p>{data.description}</p>
+            </div>
+
+            <video autoPlay muted loop>
+              <source src={`https://rocketmoviez-api.onrender.com/video/${data.movie_id}`} type="video/webm" preload="metadata" />
+            </video>
+          </div>
+        </main>
+
+      }
     </Container>
   )
 }

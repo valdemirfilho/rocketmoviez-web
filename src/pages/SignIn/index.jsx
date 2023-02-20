@@ -11,9 +11,10 @@ export function SignIn() {
   const [password, setPassword] = useState(" ")
 
   const { signIn } = useAuth()
-  
-  function handleSignIn() {
-    signIn({email, password})
+
+  function handleSignIn(e) {
+    e.preventDefault()
+    signIn({ email, password })
   }
 
   return (
@@ -24,23 +25,23 @@ export function SignIn() {
           <p>Aplicação para acompanhar tudo que assistir.</p>
         </div>
         <h2>Faça seu login</h2>
-        <form>
-          <Input 
-            type="email" 
-            placeholder="E-mail" 
-            icon={FiMail} 
-            onChange={(e) => setEmail(e.target.value)} 
+        <form onSubmit={handleSignIn}>
+          <Input
+            type="email"
+            placeholder="E-mail"
+            icon={FiMail}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
-          <Input 
-            type="password" 
-            placeholder="Senha" 
-            icon={FiLock} 
+          <Input
+            type="password"
+            placeholder="Senha"
+            icon={FiLock}
             autoComplete="off"
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <Button title="Entrar" onClick={handleSignIn}/>
+          <Button title="Entrar" onClick={handleSignIn} />
 
           <TextButton name="Criar conta" to="/signup" />
         </form>

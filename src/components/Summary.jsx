@@ -4,15 +4,30 @@ import { Stars } from "./Stars.jsx"
 const Container = styled.div`
   background-color: ${({ theme }) => theme.BLACK_PINK_SALMON};
   width: 100%;
-  padding: 16px 24px;
   border-radius: 16px;
+  display: flex;
+  align-items: center;
+
+  .cover-container {
+    display: flex;
+    align-items: center;
+    padding-left: 14px;
+  }
+
+  .cover-container > img {
+    border-radius: 8px 0 0 8px;
+  }
+
+  .info-container {
+    padding: 16px 16px;
+  }
 
   > h2 {
     font-size: 24px;
     font-weight: 500;
   }
 
-  > div {
+  .info-container div {
     width: 100px;
     margin-bottom: 16px;
 
@@ -21,7 +36,7 @@ const Container = styled.div`
     }
   }
 
-  > p {
+  .info-container > p {
     color: ${({ theme }) => theme.LIGHT_GRAY};
     font-family: "Roboto";
     font-size: 16px;
@@ -34,7 +49,7 @@ const Container = styled.div`
     -webkit-box-orient: vertical
   }
 
-  > div.tags-wrapper {
+  .info-container > div.tags-wrapper {
     margin-top: 16px;
     margin-bottom: 0;
     display: flex;
@@ -47,8 +62,8 @@ const Container = styled.div`
       white-space: nowrap;
       
       padding: 5px 10px;
-      background-color: ${({ theme }) => theme.PINK_SALMON_200};
-      color: ${({ theme }) => theme.BLACK};
+      border: 1px solid ${({ theme }) => theme.PINK_SALMON_100};
+      color: ${({ theme }) => theme.PINK_SALMON_100};
 
       font-size: 12px;
       font-family: 'Roboto';
@@ -57,21 +72,28 @@ const Container = styled.div`
   }
 `
 
-export function Summary({ title, rating, children, tags }) {
-  return ( 
-    <Container>
-      <h2>{ title }</h2>
-      <Stars rating={rating} />
-      <p>{ children }</p>
-      <div className="tags-wrapper">
-      {
-        tags ? tags.map((tag, index) => {
-          return (
-            <span key={index}>{ tag.name }</span>
-          )
-        }) : null
-      }
+export function Summary({ title, rating, children, tags, cover_url, handleMovieDetails }) {
+  return (
+    <Container onClick={handleMovieDetails}>
+      <div className="cover-container">
+        {
+          <img src={cover_url} width={110} />
+        }
+      </div>
+      <div className="info-container">
+        <h2>{title}</h2>
+        <Stars rating={rating} />
+        <p>{children}</p>
+        <div className="tags-wrapper">
+          {
+            tags ? tags.map((tag, index) => {
+              return (
+                <span key={index}>{tag.name}</span>
+              )
+            }) : null
+          }
+        </div>
       </div>
     </Container>
-   )
+  )
 }

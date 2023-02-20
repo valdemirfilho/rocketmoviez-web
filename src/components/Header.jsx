@@ -72,7 +72,7 @@ const Profile = styled.div`
   }
 `
 
-export function Header() {
+export function Header({ user, onChange }) {
   const { logOut } = useAuth()
 
   return (
@@ -81,10 +81,10 @@ export function Header() {
         <Link to="/">
           <h1>RocketMoviez</h1>
         </Link>
-        <input type="text" placeholder="Pesquisar por título"></input>
+        <input onChange={onChange} type="text" placeholder="Pesquisar por título"></input>
         <Profile>
           <div>
-            <span>Valdemir Filho</span>
+            <span>{user.name}</span>
             <a onClick={logOut}>Sair</a>
           </div>
           <Link to="/profile">

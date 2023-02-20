@@ -27,7 +27,6 @@ const Container = styled.div`
     &::placeholder {
       color: ${({ theme }) => theme.LIGHT_GRAY};
     } 
-
   }
 
   > button {
