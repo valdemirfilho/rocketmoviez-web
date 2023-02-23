@@ -62,7 +62,8 @@ export function MoviePreview() {
             </div>
 
             <video autoPlay muted loop>
-              <source src={`https://rocketmoviez-api.onrender.com/video/${data.movie_id}`} type="video/webm" preload="metadata" />
+              {/* <source src={`https://rocketmoviez-api.onrender.com/video/${data.movie_id}`} type="video/webm" preload="metadata" /> */}
+              <source src={`https://rocketmoviez-api.fly.dev/video/${data.movie_id}`} type="video/webm" preload="metadata" />
             </video>
           </div>
         </main>

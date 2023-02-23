@@ -7,6 +7,7 @@ const Container = styled.header`
   grid-area: header;
   height: 120px;
   width: 100%;
+  background-color: ${({ theme }) => theme.DARK_GRAY};
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: ${({ theme }) => theme.BLACK_PINK_SALMON};
@@ -81,14 +82,16 @@ export function Header({ user, onChange }) {
         <Link to="/">
           <h1>RocketMoviez</h1>
         </Link>
+
         <input onChange={onChange} type="text" placeholder="Pesquisar por título"></input>
+
         <Profile>
           <div>
             <span>{user.name}</span>
             <a onClick={logOut}>Sair</a>
           </div>
           <Link to="/profile">
-            <ProfilePicture src="https://github.com/valdemirfilho.png" alt="Valdemir" size="64" />
+            <ProfilePicture src={`http://localhost:5000/files/${user.avatar}`} alt="Valdemir" size="64" />
           </Link>
         </Profile>
       </div>

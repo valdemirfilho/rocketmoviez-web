@@ -27,11 +27,27 @@ export const Container = styled.div`
     place-items: center;
     gap: 10px;
 
-    img {
-      margin-bottom: 36px;
+    > div.avatar-wrapper {
+      display: grid;
+      place-items: center;
+
+      position: relative;
+
+      > label {
+        font-size: 40px;
+        position: absolute;
+        bottom: 0;
+        right: 10px;
+        height: 40px;
+        cursor: pointer;
+      }
+
+      input {
+        display: none;
+      }
     }
 
-    div:nth-of-type(even) {
+    > div:nth-of-type(2n+1) {
       margin-bottom: 24px;
     }
   }
