@@ -3,6 +3,9 @@ import styled from "styled-components"
 import { ProfilePicture } from "./ProfilePicture.jsx"
 import { useAuth } from "../hooks/auth.hook.jsx"
 
+import { api } from "../services/api.js"
+import avatarPlaceholder from "../assets/avatar-placeholder.png"
+
 const Container = styled.header`
   grid-area: header;
   height: 120px;
@@ -76,6 +79,8 @@ const Profile = styled.div`
 export function Header({ user, onChange }) {
   const { logOut } = useAuth()
 
+  const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
+
   return (
     <Container>
       <div>
@@ -91,7 +96,7 @@ export function Header({ user, onChange }) {
             <a onClick={logOut}>Sair</a>
           </div>
           <Link to="/profile">
-            <ProfilePicture src={`http://localhost:5000/files/${user.avatar}`} alt="Valdemir" size="64" />
+            <ProfilePicture src={avatarUrl} alt="Valdemir" size="64" />
           </Link>
         </Profile>
       </div>

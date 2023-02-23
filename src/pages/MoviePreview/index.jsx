@@ -8,11 +8,14 @@ import { useAuth } from "../../hooks/auth.hook.jsx"
 import { useState, useEffect } from "react"
 import { api } from "../../services/api.js"
 import { useParams } from "react-router-dom"
+import avatarPlaceholder from "../../assets/avatar-placeholder.png"
 
 export function MoviePreview() {
   const { user } = useAuth()
   const params = useParams()
   const [data, setData] = useState(null)
+
+  const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
 
   useEffect(() => {
     async function fetchData() {
@@ -37,13 +40,13 @@ export function MoviePreview() {
         data &&
         <main>
           <div className="wrapper">
-            <TextButton name="Voltar" icon to="/" />
+            <TextButton name="Voltar" to="/" icon />
             <div className="title-and-rating">
               <h2>{data.title}</h2>
               <Stars rating={data.rating} />
             </div>
             <div className="author-datetime">
-              <ProfilePicture src="https://github.com/valdemirfilho.png" size="20" alt="Valdemir" />
+              <ProfilePicture src={avatarUrl} size="20" alt="Valdemir" />
               <span>Por {user.name}</span>
               <BsClock />
               <span>{formatDateTime(data.created_at)}</span>

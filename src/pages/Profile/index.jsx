@@ -7,6 +7,10 @@ import { ProfilePicture } from "../../components/ProfilePicture.jsx"
 import { useState } from "react"
 import { useAuth } from "../../hooks/auth.hook.jsx"
 
+import avatarPlaceholder from "../../assets/avatar-placeholder.png"
+
+import { api } from "../../services/api.js"
+
 export function Profile() {
   const { user, updateProfile } = useAuth()
 
@@ -14,7 +18,11 @@ export function Profile() {
   const [email, setEmail] = useState(user.email)
   const [oldPassword, setOldPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
-  const [avatar, setAvatar] = useState(user.avatar)
+
+  const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
+
+  const [avatar, setAvatar] = useState(avatarUrl)
+  const [avatarFile, setAvatarFile] = useState(null)
 
   async function handleUpdate(e) {
     e.preventDefault()
@@ -22,12 +30,20 @@ export function Profile() {
     const user = {
       name,
       email,
+      avatar,
       new_password: newPassword,
-      old_password: oldPassword,
-      avatar
+      old_password: oldPassword
     }
 
-    await updateProfile({ user })
+    await updateProfile({ user, avatarFile })
+  }
+
+  function handleChangeAvatar(e) {
+    const file = e.target.files[0]
+    setAvatarFile(file)
+
+    const imagePreview = URL.createObjectURL(file)
+    setAvatar(imagePreview)
   }
 
   return (
@@ -46,14 +62,18 @@ export function Profile() {
       <form>
         <div className="avatar-wrapper">
           <ProfilePicture
-            src={`http://localhost:5000/files/${user.avatar}`}
+            src={avatar}
             size="180"
             alt={user.name}
           />
 
           <label htmlfrom="avatar">
             <FiCamera />
-            <input id="avatar" type="file" />
+            <input
+              id="avatar"
+              type="file"
+              onChange={handleChangeAvatar}
+            />
           </label>
         </div>
 
