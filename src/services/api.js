@@ -3,6 +3,6 @@ import axios from "axios"
 export const api = axios.create({
   // baseURL: "https://rocketmoviez-api.onrender.com"
   // baseURL: "http://localhost:5000"
-  baseURL: "https://rocketmoviez-api.fly.dev/"
+  baseURL: "https://rocketmoviez-api.fly.dev"
 
 })
