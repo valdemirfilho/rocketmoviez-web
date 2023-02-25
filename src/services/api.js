@@ -1,8 +1,8 @@
 import axios from "axios"
 
 export const api = axios.create({
-  // baseURL: "https://rocketmoviez-api.onrender.com"
-  // baseURL: "http://localhost:5000"
-  baseURL: "https://rocketmoviez-api.fly.dev"
+  baseURL: (import.meta.env.APP_ENV == 'development')
+    ? "http://localhost:5000"
+    : "https://rocketmoviez-api.fly.dev"
 
 })
