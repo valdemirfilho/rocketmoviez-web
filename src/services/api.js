@@ -6,5 +6,3 @@ export const api = axios.create({
     : "https://rocketmoviez-api.fly.dev"
 })
 
-console.log(import.meta.env)
-
