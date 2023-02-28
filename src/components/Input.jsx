@@ -11,6 +11,18 @@ const Container = styled.div`
     outline: 1px solid ${({ theme }) => theme.PINK_SALMON_200};
   }
 
+  &:not(:has(:placeholder-shown)) {
+    outline: 1px solid ${({ theme }) => theme.PINK_SALMON_100};
+  }
+
+  &:has(:not(input[type=number]):invalid)  {
+    outline: 1px solid red;
+  }
+
+  &:has(input[type=number]:focus-visible:invalid)  {
+    outline: 1px solid red;
+  }
+
   > input {
     font-size: 16px;
     height: 56px;
@@ -33,10 +45,10 @@ const Container = styled.div`
   }
 `
 
-export function Input({ icon: Icon, ...rest}) {
+export function Input({ icon: Icon, ...rest }) {
   return (
     <Container pd={rest.pd}>
-      { Icon && <Icon size={20} /> }
+      {Icon && <Icon size={20} />}
       <input {...rest} />
     </Container>
   )

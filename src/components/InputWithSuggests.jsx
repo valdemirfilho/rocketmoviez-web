@@ -14,6 +14,14 @@ const Container = styled.div`
     &:focus-within {
       outline: 1px solid ${({ theme }) => theme.PINK_SALMON_200};
     }
+
+    &:not(:has(:placeholder-shown)) {
+      outline: 1px solid ${({ theme }) => theme.PINK_SALMON_100};
+    }
+
+    &:has(:not(:placeholder-shown):focus-visible:invalid)  {
+      outline: 1px solid red;
+    }
   }
 
   input {

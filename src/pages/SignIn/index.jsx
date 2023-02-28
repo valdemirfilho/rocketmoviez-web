@@ -6,14 +6,16 @@ import { FiMail, FiLock } from "react-icons/fi"
 import { useAuth } from "../../hooks/auth.hook.jsx"
 import { useState } from "react"
 
+import { validateEmail } from "../../utils/validateEmail.js"
+
 export function SignIn() {
   const [email, setEmail] = useState(" ")
   const [password, setPassword] = useState(" ")
 
   const { signIn } = useAuth()
 
-  function handleSignIn(e) {
-    e.preventDefault()
+  function handleSignIn() {
+    if (!validateEmail(email)) return alert("Preencha um e-mail válido")
     signIn({ email, password })
   }
 
@@ -29,6 +31,7 @@ export function SignIn() {
           <Input
             type="email"
             placeholder="E-mail"
+            pattern="\S+@\S+\.\S+"
             icon={FiMail}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -41,7 +44,7 @@ export function SignIn() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <Button title="Entrar" onClick={handleSignIn} />
+          <Button type="button" title="Entrar" onClick={handleSignIn} />
 
           <TextButton name="Criar conta" to="/signup" />
         </form>

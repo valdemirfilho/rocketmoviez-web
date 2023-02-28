@@ -53,15 +53,14 @@ export function Home() {
         <div className="title-button-wrapper">
           <h1>Meus filmes</h1>
           <Link to="/createmovie">
-            <FiPlus />
-            Adicionar filme
+            <FiPlus /> Adicionar Nota
           </Link>
         </div>
 
         <div className="summary-wrapper">
           {
-            moviesNotes.length > 0 ?
-              moviesNotes.map((movieNote, index) => {
+            moviesNotes.length > 0
+              ? moviesNotes.map((movieNote, index) => {
                 return (
                   <Summary
                     key={index}
@@ -74,7 +73,8 @@ export function Home() {
                     {movieNote.description}
                   </Summary>
                 )
-              }) : <span>Nenhum filme para exibir! 😢</span>
+              })
+              : <span>Nenhum filme para exibir! 😢</span>
           }
         </div>
       </main>

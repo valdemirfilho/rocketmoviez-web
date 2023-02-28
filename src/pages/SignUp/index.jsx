@@ -7,6 +7,8 @@ import { useState } from "react"
 import { api } from "../../services/api.js"
 import { useNavigate } from "react-router-dom"
 
+import { validateEmail } from "../../utils/validateEmail.js"
+
 export function SignUp() {
   const [name, setName] = useState(null)
   const [email, setEmail] = useState(null)
@@ -17,6 +19,10 @@ export function SignUp() {
   async function handleSignUp() {
     if (!name || !email || !password) {
       return alert("Preencha todos os campos")
+    }
+
+    if (!validateEmail(email)) {
+      return alert("Preencha um e-mail válido")
     }
 
     try {
@@ -52,6 +58,7 @@ export function SignUp() {
           <Input
             type="email"
             placeholder="E-mail"
+            pattern="\S+@\S+\.\S+"
             icon={FiMail}
             onChange={e => setEmail(e.target.value)}
           />
@@ -64,11 +71,12 @@ export function SignUp() {
             onChange={e => setPassword(e.target.value)}
           />
 
+          <Button
+            type="button"
+            title="Cadastrar"
+            onClick={handleSignUp}
+          />
         </form>
-        <Button
-          title="Cadastrar"
-          onClick={handleSignUp}
-        />
 
         <TextButton name="Voltar para o login" to="/" icon />
       </div>
