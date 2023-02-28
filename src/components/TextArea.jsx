@@ -18,10 +18,14 @@ const Container = styled.textarea`
   &::placeholder {
     color: ${({ theme }) => theme.LIGHT_GRAY};
   }
+
+  &:not(:placeholder-shown) {
+    outline: 1px solid ${({ theme }) => theme.PINK_SALMON_100};
+  }
 `
 
 export function TextArea({ value, ...rest }) {
   return (
-    <Container value={value} { ...rest }/>
+    <Container value={value} {...rest} />
   )
 }

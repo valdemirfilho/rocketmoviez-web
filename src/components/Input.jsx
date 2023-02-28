@@ -23,6 +23,14 @@ const Container = styled.div`
     outline: 1px solid red;
   }
 
+  &:has(:disabled) {
+    outline: none;
+  }
+
+  &:has(:disabled):hover {
+    cursor: not-allowed;
+  }
+
   > input {
     font-size: 16px;
     height: 56px;
@@ -35,6 +43,10 @@ const Container = styled.div`
     padding-right: 20px;
 
     &::placeholder {
+      color: ${({ theme }) => theme.LIGHT_GRAY};
+    }
+
+    &:disabled {
       color: ${({ theme }) => theme.LIGHT_GRAY};
     }
   }

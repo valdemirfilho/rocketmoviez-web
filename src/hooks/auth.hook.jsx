@@ -78,7 +78,7 @@ function AuthProvider({ children }) {
       if (decodedJWT.exp * 1000 < Date.now()) {
         logOut()
       } else {
-        console.log("passei aqui")
+        // console.log("passei aqui")
         // api.defaults.headers.authorization = `Bearer ${token}`
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`
 

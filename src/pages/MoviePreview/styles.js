@@ -55,6 +55,10 @@ export const Container = styled.div`
         color: ${({ theme }) => theme.PINK_SALMON_100};
         font-size: 16px;
       }
+
+      a {
+        margin-left: 4px;
+      }
     }
 
     .tags {

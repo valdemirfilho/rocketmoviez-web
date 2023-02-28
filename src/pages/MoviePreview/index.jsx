@@ -9,6 +9,7 @@ import { useState, useEffect } from "react"
 import { api } from "../../services/api.js"
 import { useParams } from "react-router-dom"
 import avatarPlaceholder from "../../assets/avatar-placeholder.png"
+import { FaRegEdit } from "react-icons/fa"
 
 export function MoviePreview() {
   const { user } = useAuth()
@@ -41,15 +42,19 @@ export function MoviePreview() {
         <main>
           <div className="wrapper">
             <TextButton name="Voltar" to="/" icon />
+
             <div className="title-and-rating">
               <h2>{data.title}</h2>
               <Stars rating={data.rating} />
             </div>
+
             <div className="author-datetime">
               <ProfilePicture src={avatarUrl} size="20" alt="Valdemir" />
               <span>Por {user.name}</span>
               <BsClock />
               <span>{formatDateTime(data.created_at)}</span>
+              <FaRegEdit />
+              <TextButton name="editar" to={`/editmovie/${params.id}`} />
             </div>
 
             <div className="tags">
@@ -65,8 +70,7 @@ export function MoviePreview() {
             </div>
 
             <video autoPlay muted loop>
-              {/* <source src={`https://rocketmoviez-api.onrender.com/video/${data.movie_id}`} type="video/webm" preload="metadata" /> */}
-              <source src={`https://rocketmoviez-api.fly.dev/video/${data.movie_id}`} type="video/webm" preload="metadata" />
+              <source src={`${import.meta.env.VITE_VIDEO_URL}/${data.movie_id}`} type="video/webm" preload="metadata" />
             </video>
           </div>
         </main>
