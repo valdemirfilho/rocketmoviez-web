@@ -5,7 +5,7 @@ import { Input } from "../../components/Input.jsx"
 import { TextArea } from "../../components/TextArea.jsx"
 import { TagInput } from "../../components/TagInput.jsx"
 import { Button } from "../../components/Button.jsx"
-import { useLayoutEffect, useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { api } from "../../services/api.js"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../hooks/auth.hook.jsx"
@@ -23,10 +23,12 @@ export function EditMovie() {
   const [newTag, setNewTag] = useState("")
 
   const [data, setData] = useState({})
-  const [rating, setRating] = useState(-1)
+  const [rating, setRating] = useState("")
 
   const { user } = useAuth()
   const params = useParams()
+
+  const inputRating = useRef(null)
 
   function handleAddTag() {
     if (newTag === "") {
@@ -69,23 +71,38 @@ export function EditMovie() {
     navigate("/")
   }
 
+  async function handleDeleteMovie() {
+    const confirmInput = confirm(`Deseja excluir o filme ${title}?`)
+
+    if (confirmInput) {
+      await api.delete(`/movienotes/${params.id}`)
+      navigate("/")
+    } else {
+      return
+    }
+  }
+
   useEffect(() => {
     async function fetchData() {
       const response = await api.get(`/movienotes/${params.id}`)
       console.log('r', response.data)
       const { title, description, rating, movie_tags } = response.data
-      setData(response.data)
-      setTags(movie_tags)
       setDescription(description)
       setTitle(title)
       setRating(rating)
+
+      const arrayTagsNames = movie_tags.map(tag => tag.name)
+      setTags(arrayTagsNames)
     }
 
     fetchData()
   }, [])
 
   useEffect(() => {
-    console.log('rate', rating)
+    const timer = setTimeout(() => {
+      inputRating.current.focus()
+    }, 500)
+    return () => clearTimeout(timer)
   }, [rating])
 
   return (
@@ -109,13 +126,13 @@ export function EditMovie() {
                   type="number"
                   value={rating}
                   placeholder="Sua nota (de 0 a 5)"
+                  innerRef={inputRating}
                   min="0"
                   max="5"
                   pd="true"
-                  onChange={(e) => setRating(Number(e.target.value))}
+                  onChange={(e) => setRating(e.target.value)}
                   onFocus={e => e.target.select()}
                   required
-                  autoFocus
                 />
               </div >
 
@@ -136,8 +153,8 @@ export function EditMovie() {
                     isNew={false}
                     key={String(index)}
                     onClick={() => handleRemoveTag(tag)}
-                    value={tag.name}
-                    size={String(tag.name.length)}
+                    value={tag}
+                    size={String(tag.length)}
                   />
                 )
               })
@@ -157,7 +174,7 @@ export function EditMovie() {
         </form>
 
         <div className="buttons-wrapper">
-          <Button className="button-del" title="Excluir" />
+          <Button className="button-del" title="Excluir" onClick={handleDeleteMovie} />
           <Button
             title="Salvar alterações"
             onClick={handleNewMovie}

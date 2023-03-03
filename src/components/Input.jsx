@@ -57,11 +57,11 @@ const Container = styled.div`
   }
 `
 
-export function Input({ icon: Icon, ...rest }) {
+export function Input({ icon: Icon, innerRef, ...rest }) {
   return (
     <Container pd={rest.pd}>
       {Icon && <Icon size={20} />}
-      <input {...rest} />
+      <input ref={innerRef} {...rest} />
     </Container>
   )
 }

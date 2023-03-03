@@ -55,7 +55,11 @@ export const Container = styled.div`
   .buttons-wrapper {
     margin-top: 40px;
     display: flex;
+    justify-content: flex-end;
     gap: 40px;
 
+    button {
+      width: 50%;
+    }
   }
 `

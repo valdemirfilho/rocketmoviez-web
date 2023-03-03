@@ -6,7 +6,7 @@ import { InputWithSuggests } from "../../components/InputWithSuggests.jsx"
 import { TextArea } from "../../components/TextArea.jsx"
 import { TagInput } from "../../components/TagInput.jsx"
 import { Button } from "../../components/Button.jsx"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { api } from "../../services/api.js"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../hooks/auth.hook.jsx"
@@ -15,6 +15,8 @@ import { data } from "../../services/marvel.json"
 
 export function CreateMovie() {
   const navigate = useNavigate()
+
+  const mcuMoviesTitles = data.map(movie => movie.title.split('|')[0].trim())
 
   const [title, setTitle] = useState("")
   const [showDropdown, setShowDropdown] = useState(false)
@@ -91,6 +93,11 @@ export function CreateMovie() {
       return
     }
 
+    if (!mcuMoviesTitles.includes(title)) {
+      alert("Escolha um filme da lista!")
+      return
+    }
+
     await api.post("/movienotes", {
       title,
       rating,
@@ -103,6 +110,16 @@ export function CreateMovie() {
     alert("Filme adicionado com sucesso!")
     navigate("/")
   }
+
+  function handleValidateRating() {
+
+  }
+
+  useEffect(() => {
+    console.log(mcuMoviesTitles)
+    console.log(title)
+    console.log(mcuMoviesTitles.includes(title))
+  }, [title])
 
   return (
     <Container>
@@ -139,6 +156,7 @@ export function CreateMovie() {
                   max="5"
                   pd="true"
                   onChange={(e) => setRating(Number(e.target.value))}
+                  onBlur={handleValidateRating}
                   required
                 />
               </div >
@@ -186,7 +204,6 @@ export function CreateMovie() {
         </form>
 
         <div className="buttons-wrapper">
-          <Button className="button-del" title="Excluir" />
           <Button
             title="Salvar alterações"
             onClick={handleNewMovie}

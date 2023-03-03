@@ -83,7 +83,7 @@ export function InputWithSuggests({
   ...rest
 }) {
   function renderItem(item) {
-    return item.split("|")[0]
+    return item.split("|")[0].trim()
   }
 
   return (
