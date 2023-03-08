@@ -48,7 +48,7 @@ export function Home() {
 
   return (
     <Container>
-      <Header onChange={handleChange} user={user} />
+      <Header onChange={handleChange} user={user} inputShow={true} />
       <main>
         <div className="title-button-wrapper">
           <h1>Meus filmes</h1>

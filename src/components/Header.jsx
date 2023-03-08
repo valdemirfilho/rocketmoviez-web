@@ -40,6 +40,7 @@ const Container = styled.header`
       outline: none; 
       padding: 8px 24px;
       border-radius: 10px;
+      visibility: ${props => props.inputShow ? 'visible' : 'hidden'};
 
       &:focus-within {
         outline: 1px solid ${({ theme }) => theme.PINK_SALMON_200};
@@ -76,13 +77,13 @@ const Profile = styled.div`
   }
 `
 
-export function Header({ user, onChange }) {
+export function Header({ user, onChange, inputShow }) {
   const { logOut } = useAuth()
 
   const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
 
   return (
-    <Container>
+    <Container inputShow={inputShow}>
       <div>
         <Link to="/">
           <h1>RocketMoviez</h1>
