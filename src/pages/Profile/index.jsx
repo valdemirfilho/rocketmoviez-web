@@ -25,8 +25,6 @@ export function Profile() {
   const [avatarFile, setAvatarFile] = useState(null)
 
   async function handleUpdate(e) {
-    e.preventDefault()
-
     const user = {
       name,
       email,
@@ -113,7 +111,7 @@ export function Profile() {
           onChange={(e) => setNewPassword(e.target.value)}
         />
 
-        <Button title="Salvar" onClick={handleUpdate} />
+        <Button type="button" title="Salvar" onClick={handleUpdate} />
       </form>
 
     </Container>
