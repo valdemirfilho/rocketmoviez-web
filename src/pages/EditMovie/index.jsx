@@ -10,7 +10,7 @@ import { api } from "../../services/api.js"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../hooks/auth.hook.jsx"
 import { useParams } from "react-router-dom"
-
+import { InputStars } from "../../components/InputStars.jsx"
 
 // import { data } from "../../services/marvel.json"
 
@@ -22,13 +22,10 @@ export function EditMovie() {
   const [tags, setTags] = useState([])
   const [newTag, setNewTag] = useState("")
 
-  const [data, setData] = useState({})
   const [rating, setRating] = useState("")
 
   const { user } = useAuth()
   const params = useParams()
-
-  const inputRating = useRef(null)
 
   function handleAddTag() {
     if (newTag === "") {
@@ -95,12 +92,13 @@ export function EditMovie() {
     fetchData()
   }, [])
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      inputRating.current.focus()
-    }, 500)
-    return () => clearTimeout(timer)
-  }, [rating])
+  function handleRating(e) {
+    setRating(Number(e.target.value))
+  }
+
+  // useEffect(() => {
+  //   console.log(rating)
+  // }, [rating])
 
   return (
     <Container>
@@ -119,18 +117,10 @@ export function EditMovie() {
                   disabled
                 />
 
-                <Input
-                  type="number"
-                  value={rating}
-                  placeholder="Sua nota (de 0 a 5)"
-                  innerRef={inputRating}
-                  min="0"
-                  max="5"
-                  pd="true"
-                  onChange={(e) => setRating(e.target.value)}
-                  onFocus={e => e.target.select()}
-                  required
-                />
+                <div>
+                  <p>Sua nota:</p>
+                  <InputStars handleRating={handleRating} rating={rating} />
+                </div>
               </div >
 
               <TextArea

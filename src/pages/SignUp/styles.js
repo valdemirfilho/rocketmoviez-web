@@ -1,5 +1,6 @@
 import styled from "styled-components"
-import imageBg from "../../assets/background.webp"
+// import imageBg from "../../assets/background.webp"
+import imageBg from "../../assets/bg.webp"
 
 export const Container = styled.div`
   height: 100vh;

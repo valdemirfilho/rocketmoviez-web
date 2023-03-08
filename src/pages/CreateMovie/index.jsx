@@ -1,7 +1,6 @@
 import { Container } from "./styles.js"
 import { TextButton } from "../../components/TextButton.jsx"
 import { Header } from "../../components/Header.jsx"
-import { Input } from "../../components/Input.jsx"
 import { InputWithSuggests } from "../../components/InputWithSuggests.jsx"
 import { TextArea } from "../../components/TextArea.jsx"
 import { TagInput } from "../../components/TagInput.jsx"
@@ -10,6 +9,8 @@ import { useState, useEffect } from "react"
 import { api } from "../../services/api.js"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../hooks/auth.hook.jsx"
+
+import { InputStars } from "../../components/InputStars.jsx"
 
 import { data } from "../../services/marvel.json"
 
@@ -81,7 +82,7 @@ export function CreateMovie() {
 
   async function handleNewMovie(e) {
     e.preventDefault()
-    const ratingValues = [0, 1, 2, 3, 4, 5]
+    const ratingValues = [1, 2, 3, 4, 5]
 
     if (!title) {
       alert("Título não pode ser vazio!")
@@ -89,7 +90,7 @@ export function CreateMovie() {
     }
 
     if (!ratingValues.includes(rating)) {
-      alert("Nota não pode ser vazia!")
+      alert("Nota deve ser um valor entre 1 e 5.")
       return
     }
 
@@ -111,9 +112,13 @@ export function CreateMovie() {
     navigate("/")
   }
 
-  function handleValidateRating() {
-
+  function handleRating(e) {
+    setRating(Number(e.target.value))
   }
+
+  // useEffect(() => {
+  //   console.log(rating)
+  // }, [rating])
 
   // useEffect(() => {
   //   console.log(mcuMoviesTitles)
@@ -149,16 +154,10 @@ export function CreateMovie() {
                   autoFocus
                 />
 
-                <Input
-                  type="number"
-                  placeholder="Sua nota (de 0 a 5)"
-                  min="0"
-                  max="5"
-                  pd="true"
-                  onChange={(e) => setRating(Number(e.target.value))}
-                  onBlur={handleValidateRating}
-                  required
-                />
+                <div>
+                  <p>Sua nota:</p>
+                  <InputStars handleRating={handleRating} rating={rating} />
+                </div>
               </div >
 
               <TextArea
@@ -205,7 +204,7 @@ export function CreateMovie() {
 
         <div className="buttons-wrapper">
           <Button
-            title="Salvar alterações"
+            title="Salvar"
             onClick={handleNewMovie}
           />
         </div>

@@ -20,9 +20,9 @@ export function Stars({ rating }) {
     <Container>
       {
         stars.map(star => {
-          return (star <= Number(rating)) 
-            ? <FaStar key={star} /> 
-            : <FaRegStar key={star} /> 
+          return (star <= Number(rating))
+            ? <FaStar key={star} />
+            : <FaRegStar key={star} />
         })
       }
     </Container>
