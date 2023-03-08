@@ -44,31 +44,24 @@ export function EditMovie() {
     setTags(prevState => prevState.filter(item => item !== tag))
   }
 
-  async function handleNewMovie(e) {
+  async function handleUpdateMovie(e) {
     e.preventDefault()
     const ratingValues = [0, 1, 2, 3, 4, 5]
 
-    if (!title) {
-      alert("Título não pode ser vazio!")
-      return
-    }
-
-    if (!ratingValues.includes(rating)) {
+    if (!ratingValues.includes(Number(rating))) {
       alert("Nota não pode ser vazia!")
       return
     }
 
-    await api.post("/movienotes", {
+    await api.patch(`/movienotes/${params.id}`, {
       title,
       rating,
       description,
-      tags,
-      cover_url: cover,
-      movie_id: movieId
+      tags
     })
 
-    alert("Filme adicionado com sucesso!")
-    navigate("/")
+    alert(`Filme ${title} atualizado!`)
+    navigate(`/movie/${params.id}`)
   }
 
   async function handleDeleteMovie() {
@@ -85,7 +78,11 @@ export function EditMovie() {
   useEffect(() => {
     async function fetchData() {
       const response = await api.get(`/movienotes/${params.id}`)
-      console.log('r', response.data)
+
+      if (!response.data) {
+        return navigate("/")
+      }
+
       const { title, description, rating, movie_tags } = response.data
       setDescription(description)
       setTitle(title)
@@ -177,7 +174,7 @@ export function EditMovie() {
           <Button className="button-del" title="Excluir" onClick={handleDeleteMovie} />
           <Button
             title="Salvar alterações"
-            onClick={handleNewMovie}
+            onClick={handleUpdateMovie}
           />
         </div>
       </main>

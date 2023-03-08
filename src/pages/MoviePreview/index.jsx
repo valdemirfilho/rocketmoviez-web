@@ -7,7 +7,7 @@ import { ProfilePicture } from "../../components/ProfilePicture.jsx"
 import { useAuth } from "../../hooks/auth.hook.jsx"
 import { useState, useEffect } from "react"
 import { api } from "../../services/api.js"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import avatarPlaceholder from "../../assets/avatar-placeholder.png"
 import { FaRegEdit } from "react-icons/fa"
 
@@ -15,13 +15,19 @@ export function MoviePreview() {
   const { user } = useAuth()
   const params = useParams()
   const [data, setData] = useState(null)
+  const navigate = useNavigate()
 
   const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
 
   useEffect(() => {
     async function fetchData() {
       const response = await api.get(`/movienotes/${params.id}`)
-      setData(response.data)
+      if (response.data) {
+        setData(response.data)
+      } else {
+        navigate("/")
+      }
+
     }
 
     fetchData()

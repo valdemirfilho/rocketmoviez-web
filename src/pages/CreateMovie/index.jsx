@@ -115,11 +115,11 @@ export function CreateMovie() {
 
   }
 
-  useEffect(() => {
-    console.log(mcuMoviesTitles)
-    console.log(title)
-    console.log(mcuMoviesTitles.includes(title))
-  }, [title])
+  // useEffect(() => {
+  //   console.log(mcuMoviesTitles)
+  //   console.log(title)
+  //   console.log(mcuMoviesTitles.includes(title))
+  // }, [title])
 
   return (
     <Container>
