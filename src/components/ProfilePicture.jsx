@@ -1,14 +1,15 @@
 import styled from "styled-components"
 
 const Container = styled.img`
-  width: ${({size}) => size}px;
-  height: ${({size}) => size}px;
+  width: ${({ size }) => size}px;
+  height: ${({ size }) => size}px;
   border-radius: 50%;
   outline: 1px solid ${({ theme }) => theme.PINK_SALMON_200};
+  object-fit: cover;
 `
 
 export function ProfilePicture({ ...rest }) {
   return (
-    <Container { ...rest } />
+    <Container {...rest} />
   )
 }
