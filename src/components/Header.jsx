@@ -77,7 +77,7 @@ const Profile = styled.div`
   }
 `
 
-export function Header({ user, onChange, inputShow }) {
+export function Header({ user, handleChange, inputShow }) {
   const { logOut } = useAuth()
 
   const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
@@ -89,7 +89,7 @@ export function Header({ user, onChange, inputShow }) {
           <h1>RocketMoviez</h1>
         </Link>
 
-        <input onChange={onChange} type="text" placeholder="Pesquisar por título"></input>
+        <input onChange={handleChange} type="text" placeholder="Pesquisar por título"></input>
 
         <Profile>
           <div>

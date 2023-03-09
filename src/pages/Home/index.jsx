@@ -7,11 +7,13 @@ import { useEffect, useState } from "react"
 import { api } from "../../services/api.js"
 import { useAuth } from "../../hooks/auth.hook.jsx"
 import { useNavigate } from "react-router-dom"
+import { LoaderRainbow } from "../../components/LoaderRainbow.jsx"
 
 export function Home() {
-  const [moviesNotes, setMoviesNotes] = useState([])
   const [allMoviesNotes, setAllMoviesNotes] = useState([])
+  const [moviesNotes, setMoviesNotes] = useState([])
   const [filteredMovies, setFilteredMovies] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const { user } = useAuth()
 
@@ -22,6 +24,7 @@ export function Home() {
   }
 
   useEffect(() => {
+    setLoading(true)
     async function fetchData() {
       const response = await api.get("/movienotes")
       const data = await response.data
@@ -30,7 +33,7 @@ export function Home() {
     }
 
     fetchData()
-    // console.log(moviesNotes)
+    setLoading(false)
   }, [])
 
   useEffect(() => {
@@ -39,16 +42,15 @@ export function Home() {
 
   function handleChange(e) {
     const result = allMoviesNotes.filter((movie) => {
-      return movie.title.toLowerCase().includes(e.target.value)
+      return movie.title.toLowerCase().includes(e.target.value.toLowerCase())
     })
 
     setFilteredMovies(result)
   }
 
-
   return (
     <Container>
-      <Header onChange={handleChange} user={user} inputShow={true} />
+      <Header handleChange={handleChange} user={user} inputShow={true} />
       <main>
         <div className="title-button-wrapper">
           <h1>Meus filmes</h1>
@@ -57,26 +59,29 @@ export function Home() {
           </Link>
         </div>
 
-        <div className="summary-wrapper">
-          {
-            moviesNotes.length > 0
-              ? moviesNotes.map((movieNote, index) => {
-                return (
-                  <Summary
-                    key={index}
-                    title={movieNote.title}
-                    rating={movieNote.rating}
-                    tags={movieNote.tags}
-                    cover_url={movieNote.cover_url}
-                    handleMovieDetails={() => handleMovieDetails(movieNote.id)}
-                  >
-                    {movieNote.description}
-                  </Summary>
-                )
-              })
-              : <span>Nenhum filme para exibir! 😢</span>
-          }
-        </div>
+        {loading
+          ? <LoaderRainbow />
+          : <div className="summary-wrapper">
+            {
+              moviesNotes.length > 0
+                ? moviesNotes.map((movieNote, index) => {
+                  return (
+                    <Summary
+                      key={index}
+                      title={movieNote.title}
+                      rating={movieNote.rating}
+                      tags={movieNote.tags}
+                      cover_url={movieNote.cover_url}
+                      handleMovieDetails={() => handleMovieDetails(movieNote.id)}
+                    >
+                      {movieNote.description}
+                    </Summary>
+                  )
+                })
+                : <span>Nenhum filme para exibir! 😢</span>
+            }
+          </div>
+        }
       </main>
     </Container>
   )

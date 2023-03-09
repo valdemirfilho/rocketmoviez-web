@@ -19,13 +19,14 @@ export function CreateMovie() {
 
   const mcuMoviesTitles = data.map(movie => movie.title.split('|')[0].trim())
 
+  const [moviesNotes, setMoviesNotes] = useState([])
+
   const [title, setTitle] = useState("")
   const [showDropdown, setShowDropdown] = useState(false)
   const [results, setResults] = useState([])
   const [cover, setCover] = useState("")
   const [movieId, setMovieId] = useState(0)
-
-  const [rating, setRating] = useState(-1)
+  const [rating, setRating] = useState(0)
   const [description, setDescription] = useState("")
   const [tags, setTags] = useState([])
   const [newTag, setNewTag] = useState("")
@@ -115,6 +116,20 @@ export function CreateMovie() {
   function handleRating(e) {
     setRating(Number(e.target.value))
   }
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await api.get("/movienotes")
+      const data = await response.data
+      setMoviesNotes(data)
+    }
+
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    console.log(moviesNotes)
+  }, [moviesNotes])
 
   // useEffect(() => {
   //   console.log(rating)
