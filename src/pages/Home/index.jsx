@@ -13,7 +13,9 @@ export function Home() {
   const [allMoviesNotes, setAllMoviesNotes] = useState([])
   const [moviesNotes, setMoviesNotes] = useState([])
   const [filteredMovies, setFilteredMovies] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  const [hasMovies, setHasMovies] = useState(false)
 
   const { user } = useAuth()
 
@@ -24,16 +26,16 @@ export function Home() {
   }
 
   useEffect(() => {
-    setLoading(true)
     async function fetchData() {
       const response = await api.get("/movienotes")
       const data = await response.data
       setMoviesNotes(data)
       setAllMoviesNotes(data)
+      setLoading(false)
+      setHasMovies(data.length > 0)
     }
 
     fetchData()
-    setLoading(false)
   }, [])
 
   useEffect(() => {
@@ -59,28 +61,27 @@ export function Home() {
           </Link>
         </div>
 
-        {loading
-          ? <LoaderRainbow />
-          : <div className="summary-wrapper">
-            {
-              moviesNotes.length > 0
-                ? moviesNotes.map((movieNote, index) => {
-                  return (
-                    <Summary
-                      key={index}
-                      title={movieNote.title}
-                      rating={movieNote.rating}
-                      tags={movieNote.tags}
-                      cover_url={movieNote.cover_url}
-                      handleMovieDetails={() => handleMovieDetails(movieNote.id)}
-                    >
-                      {movieNote.description}
-                    </Summary>
-                  )
-                })
-                : <span>Nenhum filme para exibir! 😢</span>
-            }
-          </div>
+        {
+          loading
+            ? <LoaderRainbow />
+            : <div className="summary-wrapper">
+              {hasMovies && moviesNotes.map((movieNote, index) => {
+                return (
+                  <Summary
+                    key={index}
+                    title={movieNote.title}
+                    rating={movieNote.rating}
+                    tags={movieNote.tags}
+                    cover_url={movieNote.cover_url}
+                    handleMovieDetails={() => handleMovieDetails(movieNote.id)}
+                  >
+                    {movieNote.description}
+                  </Summary>
+                )
+              })}
+
+              {(!hasMovies) && <span>Nenhum filme para exibir! 😢</span>}
+            </div>
         }
       </main>
     </Container>
