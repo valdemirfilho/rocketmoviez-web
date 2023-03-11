@@ -13,7 +13,7 @@ export function Home() {
   const [moviesNotes, setMoviesNotes] = useState({})
   const [allMoviesNotes, setAllMoviesNotes] = useState([])
   const [filteredMovies, setFilteredMovies] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [isLoading, setLoading] = useState(true)
   const [hasMovies, setHasMovies] = useState(false)
 
   const navigate = useNavigate()
@@ -59,11 +59,12 @@ export function Home() {
           </Link>
         </div>
 
-        {loading
-          ? <LoaderRainbow />
-          : <div className="summary-wrapper">
-            {hasMovies
-              ? moviesNotes.map((movieNote, index) => (
+        {isLoading && <LoaderRainbow />}
+
+        {!isLoading &&
+          <div className="summary-wrapper">
+            {hasMovies &&
+              moviesNotes.map((movieNote, index) => (
                 <Summary
                   key={index}
                   title={movieNote.title}
@@ -75,8 +76,9 @@ export function Home() {
                   {movieNote.description}
                 </Summary>
               ))
-              : <span>Nenhum filme para exibir! 😢</span>
             }
+
+            {!hasMovies && <span>Nenhum filme para exibir! 😢</span>}
           </div>
         }
       </main>

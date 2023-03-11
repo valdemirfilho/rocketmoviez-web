@@ -12,11 +12,9 @@ const Container = styled.div`
   font-size: 1em;
   font-weight: 500;
   position: absolute;
-  /* top: 70%; */
   top: -20px;
-  right: -80px;
-  width: 100%;
-  /* text-align: center; */
+  left: 80px;
+  width: 100px;
   }
 
 .rating__star {
@@ -52,6 +50,7 @@ const Container = styled.div`
   padding: 0.125em;
 }
 
+/* 
 .rating__label--delay1 .rating__star-ring, .rating__label--delay1 .rating__star-fill, .rating__label--delay1 .rating__star-line, .rating__label--delay1 .rating__star-stroke {
   animation-delay: 0.05s;
 }
@@ -66,7 +65,7 @@ const Container = styled.div`
 
 .rating__label--delay4 .rating__star-ring, .rating__label--delay4 .rating__star-fill, .rating__label--delay4 .rating__star-line, .rating__label--delay4 .rating__star-stroke {
   animation-delay: 0.2s;
-}
+} */
 
 .rating__input {
   -webkit-appearance: none;

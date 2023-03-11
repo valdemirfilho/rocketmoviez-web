@@ -99,7 +99,7 @@ export function EditMovie() {
       <Header user={user} />
       <main>
         <TextButton name="Voltar" icon onClick={() => history.back()} />
-        <form>
+        <form id="form-edit-movie">
           <h2>Editar Filme</h2>
           <div className="form-container">
             <div className="form-container-inputs">
@@ -127,19 +127,15 @@ export function EditMovie() {
 
           <h3>Marcadores</h3>
           <div className="tags-wrapper">
-            {
-              tags.map((tag, index) => {
-                return (
-                  <TagInput
-                    isNew={false}
-                    key={String(index)}
-                    onClick={() => handleRemoveTag(tag)}
-                    value={tag}
-                    size={String(tag.length)}
-                  />
-                )
-              })
-            }
+            {tags.map((tag, index) => (
+              <TagInput
+                isNew={false}
+                key={String(index)}
+                onClick={() => handleRemoveTag(tag)}
+                value={tag}
+                size={String(tag.length)}
+              />
+            ))}
 
             <TagInput
               isNew={true}
@@ -150,15 +146,12 @@ export function EditMovie() {
               value={newTag}
               size="12"
             />
-
           </div>
         </form>
 
         <div className="buttons-wrapper">
           <Button className="button-del" title="Excluir" onClick={handleDeleteMovie} />
-          <Button
-            title="Salvar alterações"
-            onClick={handleUpdateMovie}
+          <Button type="submit" form="form-edit-movie" title="Salvar alterações" onClick={handleUpdateMovie}
           />
         </div>
       </main>

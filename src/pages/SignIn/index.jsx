@@ -12,7 +12,8 @@ export function SignIn() {
 
   const { signIn } = useAuth()
 
-  function handleSignIn() {
+  function handleSignIn(e) {
+    e.preventDefault()
     if (!validateEmail(email)) return alert("Preencha um e-mail válido")
     signIn({ email, password })
   }
@@ -24,8 +25,10 @@ export function SignIn() {
           <h1>RocketMoviez</h1>
           <p>Aplicação para acompanhar tudo que assistir.</p>
         </div>
+
         <h2>Faça seu login</h2>
-        <form onSubmit={handleSignIn}>
+
+        <form id="form-signin" onSubmit={handleSignIn}>
           <Input
             type="email"
             placeholder="E-mail"
@@ -42,14 +45,18 @@ export function SignIn() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <Button type="button" title="Entrar" onClick={handleSignIn} />
+          <Button
+            type="submit"
+            form="form-signin"
+            title="Entrar"
+            onClick={handleSignIn}
+          />
 
           <TextButton name="Criar conta" to="/signup" />
         </form>
       </div>
-      <div className="img-wrapper">
 
-      </div>
+      <div className="img-wrapper"></div>
     </Container>
   )
 }

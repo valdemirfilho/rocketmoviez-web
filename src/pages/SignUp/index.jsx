@@ -79,9 +79,8 @@ export function SignUp() {
 
         <TextButton name="Voltar para o login" to="/" icon />
       </div>
-      <div className="img-wrapper">
 
-      </div>
+      <div className="img-wrapper"></div>
     </Container>
   )
 }
