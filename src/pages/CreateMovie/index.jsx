@@ -1,26 +1,21 @@
 import { Container } from "./styles.js"
-import { TextButton } from "../../components/TextButton.jsx"
-import { Header } from "../../components/Header.jsx"
-import { InputWithSuggests } from "../../components/InputWithSuggests.jsx"
-import { TextArea } from "../../components/TextArea.jsx"
-import { TagInput } from "../../components/TagInput.jsx"
-import { Button } from "../../components/Button.jsx"
 import { useState, useEffect } from "react"
 import { api } from "../../services/api.js"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../hooks/auth.hook.jsx"
 
-import { InputStars } from "../../components/InputStars.jsx"
+import { TextButton, Header, InputWithSuggests, InputStars, TextArea, TagInput, Button } from '../../components'
 
-import { data } from "../../services/marvel.json"
+import { data_json } from "../../services/marvel.json"
 
 export function CreateMovie() {
+  const { user } = useAuth()
+
   const navigate = useNavigate()
 
-  const mcuMoviesTitles = data.map(movie => movie.title.split('|')[0].trim())
+  const mcuMoviesTitles = data_json.map(movie => movie.title.split('|')[0].trim())
 
-  const [moviesNotes, setMoviesNotes] = useState([])
-
+  const [data, setData] = useState(data_json)
   const [title, setTitle] = useState("")
   const [showDropdown, setShowDropdown] = useState(false)
   const [results, setResults] = useState([])
@@ -31,7 +26,14 @@ export function CreateMovie() {
   const [tags, setTags] = useState([])
   const [newTag, setNewTag] = useState("")
 
-  const { user } = useAuth()
+  function checkRamainingMovies() {
+    const moviesAdded = JSON.parse(localStorage.getItem("@rocketmoviez:movies"))
+    let remaingMovies
+    for (const movieAdded of moviesAdded) {
+      remaingMovies = data_json.filter(movie => movie.id !== movieAdded.movie_id)
+    }
+    return remaingMovies
+  }
 
   function handleClick(item) {
     setTitle(item)
@@ -56,6 +58,7 @@ export function CreateMovie() {
 
   function handleChange(e) {
     setTitle(e.target.value)
+
     e.target.value ? setShowDropdown(true) : setShowDropdown(false)
 
     const results = data.filter(item => {
@@ -118,28 +121,8 @@ export function CreateMovie() {
   }
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await api.get("/movienotes")
-      const data = await response.data
-      setMoviesNotes(data)
-    }
-
-    fetchData()
+    setData(checkRamainingMovies())
   }, [])
-
-  useEffect(() => {
-    console.log(moviesNotes)
-  }, [moviesNotes])
-
-  // useEffect(() => {
-  //   console.log(rating)
-  // }, [rating])
-
-  // useEffect(() => {
-  //   console.log(mcuMoviesTitles)
-  //   console.log(title)
-  //   console.log(mcuMoviesTitles.includes(title))
-  // }, [title])
 
   return (
     <Container>
@@ -190,19 +173,15 @@ export function CreateMovie() {
 
           <h3>Marcadores</h3>
           <div className="tags-wrapper">
-            {
-              tags.map((tag, index) => {
-                return (
-                  <TagInput
-                    isNew={false}
-                    key={String(index)}
-                    onClick={() => handleRemoveTag(tag)}
-                    value={tag}
-                    size={String(tag.length)}
-                  />
-                )
-              })
-            }
+            {tags.map((tag, index) => (
+              <TagInput
+                isNew={false}
+                key={String(index)}
+                onClick={() => handleRemoveTag(tag)}
+                value={tag}
+                size={String(tag.length)}
+              />
+            ))}
 
             <TagInput
               isNew={true}

@@ -1,15 +1,11 @@
 import { Container } from "./styles.js"
-import { TextButton } from "../../components/TextButton.jsx"
-import { Input } from "../../components/Input.jsx"
 import { FiUser, FiMail, FiLock, FiCamera } from "react-icons/fi"
-import { Button } from "../../components/Button.jsx"
-import { ProfilePicture } from "../../components/ProfilePicture.jsx"
 import { useState } from "react"
 import { useAuth } from "../../hooks/auth.hook.jsx"
-
+import { api } from "../../services/api.js"
 import avatarPlaceholder from "../../assets/avatar-placeholder.png"
 
-import { api } from "../../services/api.js"
+import { TextButton, Input, Button, ProfilePicture } from '../../components'
 
 export function Profile() {
   const { user, updateProfile } = useAuth()

@@ -1,15 +1,13 @@
 import { Container } from "./styles.js"
-import { Header } from "../../components/Header.jsx"
-import { TextButton } from "../../components/TextButton.jsx"
-import { Stars } from "../../components/Stars.jsx"
 import { BsClock } from "react-icons/bs"
-import { ProfilePicture } from "../../components/ProfilePicture.jsx"
 import { useAuth } from "../../hooks/auth.hook.jsx"
 import { useState, useEffect } from "react"
 import { api } from "../../services/api.js"
 import { useParams, useNavigate } from "react-router-dom"
 import avatarPlaceholder from "../../assets/avatar-placeholder.png"
 import { FaRegEdit } from "react-icons/fa"
+
+import { Header, TextButton, Stars, ProfilePicture } from '../../components'
 
 export function MoviePreview() {
   const { user } = useAuth()

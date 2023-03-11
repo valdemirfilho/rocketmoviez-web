@@ -1,18 +1,11 @@
 import { Container } from "./styles.js"
-import { TextButton } from "../../components/TextButton.jsx"
-import { Header } from "../../components/Header.jsx"
-import { Input } from "../../components/Input.jsx"
-import { TextArea } from "../../components/TextArea.jsx"
-import { TagInput } from "../../components/TagInput.jsx"
-import { Button } from "../../components/Button.jsx"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useContext } from "react"
 import { api } from "../../services/api.js"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../hooks/auth.hook.jsx"
 import { useParams } from "react-router-dom"
-import { InputStars } from "../../components/InputStars.jsx"
 
-// import { data } from "../../services/marvel.json"
+import { TextButton, Header, Input, TextArea, TagInput, Button, InputStars } from '../../components'
 
 export function EditMovie() {
   const navigate = useNavigate()
@@ -25,6 +18,7 @@ export function EditMovie() {
   const [rating, setRating] = useState("")
 
   const { user } = useAuth()
+
   const params = useParams()
 
   function handleAddTag() {

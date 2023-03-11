@@ -1,12 +1,10 @@
 import { Container } from "./styles.js"
-import { Button } from "../../components/Button.jsx"
-import { TextButton } from "../../components/TextButton.jsx"
-import { Input } from "../../components/Input.jsx"
 import { FiMail, FiLock } from "react-icons/fi"
 import { useAuth } from "../../hooks/auth.hook.jsx"
 import { useState } from "react"
-
 import { validateEmail } from "../../utils/validateEmail.js"
+
+import { Button, TextButton, Input } from '../../components'
 
 export function SignIn() {
   const [email, setEmail] = useState(" ")

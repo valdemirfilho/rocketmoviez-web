@@ -1,23 +1,20 @@
 import { Container } from "./styles.js"
-import { Header } from "../../components/Header.jsx"
-import { Summary } from "../../components/Summary.jsx"
 import { Link } from "react-router-dom"
 import { FiPlus } from "react-icons/fi"
 import { useEffect, useState } from "react"
 import { api } from "../../services/api.js"
 import { useAuth } from "../../hooks/auth.hook.jsx"
 import { useNavigate } from "react-router-dom"
-import { LoaderRainbow } from "../../components/LoaderRainbow.jsx"
+import { Header, Summary, LoaderRainbow } from '../../components'
 
 export function Home() {
+  const { user } = useAuth()
+
+  const [moviesNotes, setMoviesNotes] = useState({})
   const [allMoviesNotes, setAllMoviesNotes] = useState([])
-  const [moviesNotes, setMoviesNotes] = useState([])
   const [filteredMovies, setFilteredMovies] = useState([])
   const [loading, setLoading] = useState(true)
-
   const [hasMovies, setHasMovies] = useState(false)
-
-  const { user } = useAuth()
 
   const navigate = useNavigate()
 
@@ -25,11 +22,20 @@ export function Home() {
     navigate(`/movie/${movie_id}`)
   }
 
+  function handleChange(e) {
+    const result = allMoviesNotes.filter((movie) => {
+      return movie.title.toLowerCase().includes(e.target.value.toLowerCase())
+    })
+
+    setFilteredMovies(result)
+  }
+
   useEffect(() => {
     async function fetchData() {
       const response = await api.get("/movienotes")
       const data = await response.data
       setMoviesNotes(data)
+      localStorage.setItem("@rocketmoviez:movies", JSON.stringify(data))
       setAllMoviesNotes(data)
       setLoading(false)
       setHasMovies(data.length > 0)
@@ -42,14 +48,6 @@ export function Home() {
     setMoviesNotes(filteredMovies)
   }, [filteredMovies])
 
-  function handleChange(e) {
-    const result = allMoviesNotes.filter((movie) => {
-      return movie.title.toLowerCase().includes(e.target.value.toLowerCase())
-    })
-
-    setFilteredMovies(result)
-  }
-
   return (
     <Container>
       <Header handleChange={handleChange} user={user} inputShow={true} />
@@ -61,27 +59,25 @@ export function Home() {
           </Link>
         </div>
 
-        {
-          loading
-            ? <LoaderRainbow />
-            : <div className="summary-wrapper">
-              {hasMovies && moviesNotes.map((movieNote, index) => {
-                return (
-                  <Summary
-                    key={index}
-                    title={movieNote.title}
-                    rating={movieNote.rating}
-                    tags={movieNote.tags}
-                    cover_url={movieNote.cover_url}
-                    handleMovieDetails={() => handleMovieDetails(movieNote.id)}
-                  >
-                    {movieNote.description}
-                  </Summary>
-                )
-              })}
-
-              {(!hasMovies) && <span>Nenhum filme para exibir! 😢</span>}
-            </div>
+        {loading
+          ? <LoaderRainbow />
+          : <div className="summary-wrapper">
+            {hasMovies
+              ? moviesNotes.map((movieNote, index) => (
+                <Summary
+                  key={index}
+                  title={movieNote.title}
+                  rating={movieNote.rating}
+                  tags={movieNote.tags}
+                  cover_url={movieNote.cover_url}
+                  handleMovieDetails={() => handleMovieDetails(movieNote.id)}
+                >
+                  {movieNote.description}
+                </Summary>
+              ))
+              : <span>Nenhum filme para exibir! 😢</span>
+            }
+          </div>
         }
       </main>
     </Container>
