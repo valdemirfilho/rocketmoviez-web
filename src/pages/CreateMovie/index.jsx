@@ -28,11 +28,17 @@ export function CreateMovie() {
 
   function checkRamainingMovies() {
     const moviesAdded = JSON.parse(localStorage.getItem("@rocketmoviez:movies"))
+    console.log(moviesAdded)
     let remaingMovies
-    for (const movieAdded of moviesAdded) {
-      remaingMovies = data_json.filter(movie => movie.id !== movieAdded.movie_id)
+
+    if (moviesAdded.length > 0) {
+      for (const movieAdded of moviesAdded) {
+        remaingMovies = data_json.filter(movie => movie.id !== movieAdded.movie_id)
+      }
+      setData(remaingMovies)
+    } else {
+      setData(data_json)
     }
-    return remaingMovies
   }
 
   function handleClick(item) {
@@ -58,7 +64,6 @@ export function CreateMovie() {
 
   function handleChange(e) {
     setTitle(e.target.value)
-
     e.target.value ? setShowDropdown(true) : setShowDropdown(false)
 
     const results = data.filter(item => {
@@ -121,7 +126,8 @@ export function CreateMovie() {
   }
 
   useEffect(() => {
-    setData(checkRamainingMovies())
+    // setData(checkRamainingMovies())
+    checkRamainingMovies()
   }, [])
 
   return (
