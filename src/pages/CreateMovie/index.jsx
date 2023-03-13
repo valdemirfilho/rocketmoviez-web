@@ -28,14 +28,14 @@ export function CreateMovie() {
 
   function checkRamainingMovies() {
     const moviesAdded = JSON.parse(localStorage.getItem("@rocketmoviez:movies"))
-    console.log(moviesAdded)
-    let remaingMovies
+
+    let remainingMovies = data_json
 
     if (moviesAdded.length > 0) {
       for (const movieAdded of moviesAdded) {
-        remaingMovies = data_json.filter(movie => movie.id !== movieAdded.movie_id)
+        remainingMovies = remainingMovies.filter(movie => movie.id !== movieAdded.movie_id)
       }
-      setData(remaingMovies)
+      setData(remainingMovies)
     } else {
       setData(data_json)
     }
@@ -126,7 +126,6 @@ export function CreateMovie() {
   }
 
   useEffect(() => {
-    // setData(checkRamainingMovies())
     checkRamainingMovies()
   }, [])
 
