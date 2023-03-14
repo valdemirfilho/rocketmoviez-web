@@ -1,14 +1,18 @@
 import { Container } from "./styles.js"
 import { FiUser, FiMail, FiLock, FiCamera } from "react-icons/fi"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useAuth } from "../../hooks/auth.hook.jsx"
 import { api } from "../../services/api.js"
 import avatarPlaceholder from "../../assets/avatar-placeholder.png"
+import { useNavigate } from "react-router-dom"
 
 import { TextButton, Input, Button, ProfilePicture } from '../../components'
 
 export function Profile() {
-  const { user, updateProfile } = useAuth()
+  const { user, checkTokenExpiration, logOut, updateProfile } = useAuth()
+  const isTokenExpired = checkTokenExpiration()
+
+  const navigate = useNavigate()
 
   const [name, setName] = useState(user.name)
   const [email, setEmail] = useState(user.email)
@@ -39,6 +43,13 @@ export function Profile() {
     const imagePreview = URL.createObjectURL(file)
     setAvatar(imagePreview)
   }
+
+  useEffect(() => {
+    if (isTokenExpired) {
+      logOut()
+      navigate("/")
+    }
+  }, [])
 
   return (
     <Container>

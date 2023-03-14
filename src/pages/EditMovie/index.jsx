@@ -17,7 +17,9 @@ export function EditMovie() {
 
   const [rating, setRating] = useState("")
 
-  const { user } = useAuth()
+  const { user, checkTokenExpiration, logOut } = useAuth()
+
+  const isTokenExpired = checkTokenExpiration()
 
   const params = useParams()
 
@@ -67,23 +69,28 @@ export function EditMovie() {
   }
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await api.get(`/movienotes/${params.id}`)
+    if (isTokenExpired) {
+      logOut()
+      navigate("/")
+    } else {
+      async function fetchData() {
+        const response = await api.get(`/movienotes/${params.id}`)
 
-      if (!response.data) {
-        return navigate("/")
+        if (!response.data) {
+          return navigate("/")
+        }
+
+        const { title, description, rating, movie_tags } = response.data
+        setDescription(description)
+        setTitle(title)
+        setRating(rating)
+
+        const arrayTagsNames = movie_tags.map(tag => tag.name)
+        setTags(arrayTagsNames)
       }
 
-      const { title, description, rating, movie_tags } = response.data
-      setDescription(description)
-      setTitle(title)
-      setRating(rating)
-
-      const arrayTagsNames = movie_tags.map(tag => tag.name)
-      setTags(arrayTagsNames)
+      fetchData()
     }
-
-    fetchData()
   }, [])
 
   function handleRating(e) {

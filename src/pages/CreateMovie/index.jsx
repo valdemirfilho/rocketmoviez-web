@@ -9,7 +9,9 @@ import { TextButton, Header, InputWithSuggests, InputStars, TextArea, TagInput, 
 import { data_json } from "../../services/marvel.json"
 
 export function CreateMovie() {
-  const { user } = useAuth()
+  const { user, checkTokenExpiration, logOut } = useAuth()
+
+  const isTokenExpired = checkTokenExpiration()
 
   const navigate = useNavigate()
 
@@ -126,7 +128,12 @@ export function CreateMovie() {
   }
 
   useEffect(() => {
-    checkRamainingMovies()
+    if (isTokenExpired) {
+      logOut()
+      navigate("/")
+    } else {
+      checkRamainingMovies()
+    }
   }, [])
 
   return (

@@ -64,6 +64,14 @@ function AuthProvider({ children }) {
     }
   }
 
+  function checkTokenExpiration() {
+    const token = localStorage.getItem("@rocketmoviez:token")
+    if (token) {
+      const decodedJWT = JSON.parse(window.atob(token.split(".")[1]))
+      return decodedJWT.exp * 1000 < Date.now()
+    }
+  }
+
   useEffect(() => {
     const token = localStorage.getItem("@rocketmoviez:token")
     const user = localStorage.getItem("@rocketmoviez:user")
@@ -72,10 +80,12 @@ function AuthProvider({ children }) {
       // check jwt expiration
       const decodedJWT = JSON.parse(window.atob(token.split(".")[1]))
 
+      console.log(decodedJWT)
+      console.log(decodedJWT.exp * 1000 < Date.now())
+
       if (decodedJWT.exp * 1000 < Date.now()) {
         logOut()
       } else {
-        // console.log("passei aqui")
         // api.defaults.headers.authorization = `Bearer ${token}`
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`
 
@@ -85,10 +95,12 @@ function AuthProvider({ children }) {
         })
       }
     }
+
+    console.log("tb passei aqui")
   }, [])
 
   return (
-    <AuthContext.Provider value={{ signIn, logOut, updateProfile, user: data.user }}>
+    <AuthContext.Provider value={{ signIn, logOut, updateProfile, checkTokenExpiration, user: data.user }}>
       {children}
     </AuthContext.Provider>
   )

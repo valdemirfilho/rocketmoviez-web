@@ -8,7 +8,11 @@ import { useNavigate } from "react-router-dom"
 import { Header, Summary, LoaderRainbow } from '../../components'
 
 export function Home() {
-  const { user } = useAuth()
+  const { user, checkTokenExpiration, logOut } = useAuth()
+  const navigate = useNavigate()
+
+  const isTokenExpired = checkTokenExpiration()
+
 
   const [moviesNotes, setMoviesNotes] = useState({})
   const [allMoviesNotes, setAllMoviesNotes] = useState([])
@@ -16,7 +20,6 @@ export function Home() {
   const [isLoading, setLoading] = useState(true)
   const [hasMovies, setHasMovies] = useState(false)
 
-  const navigate = useNavigate()
 
   function handleMovieDetails(movie_id) {
     navigate(`/movie/${movie_id}`)
@@ -31,17 +34,23 @@ export function Home() {
   }
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await api.get("/movienotes")
-      const data = await response.data
-      setMoviesNotes(data)
-      localStorage.setItem("@rocketmoviez:movies", JSON.stringify(data))
-      setAllMoviesNotes(data)
-      setLoading(false)
-      setHasMovies(data.length > 0)
-    }
+    if (isTokenExpired) {
+      logOut()
+      navigate("/")
+    } else {
+      async function fetchData() {
+        const response = await api.get("/movienotes")
+        const data = await response.data
+        setMoviesNotes(data)
+        localStorage.setItem("@rocketmoviez:movies", JSON.stringify(data))
+        setAllMoviesNotes(data)
+        setLoading(false)
+        setHasMovies(data.length > 0)
+      }
 
-    fetchData()
+      fetchData()
+      console.log("passei aqui")
+    }
   }, [])
 
   useEffect(() => {

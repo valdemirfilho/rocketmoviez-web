@@ -10,25 +10,33 @@ import { FaRegEdit } from "react-icons/fa"
 import { Header, TextButton, Stars, ProfilePicture } from '../../components'
 
 export function MoviePreview() {
-  const { user } = useAuth()
+  const { user, checkTokenExpiration, logOut } = useAuth()
+  const isTokenExpired = checkTokenExpiration()
+
   const params = useParams()
+
   const [data, setData] = useState(null)
+
   const navigate = useNavigate()
 
   const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await api.get(`/movienotes/${params.id}`)
-      if (response.data) {
-        setData(response.data)
-      } else {
-        navigate("/")
+    if (isTokenExpired) {
+      logOut()
+      navigate("/")
+    } else {
+      async function fetchData() {
+        const response = await api.get(`/movienotes/${params.id}`)
+        if (response.data) {
+          setData(response.data)
+        } else {
+          navigate("/")
+        }
       }
 
+      fetchData()
     }
-
-    fetchData()
   }, [])
 
   function formatDateTime(dateString) {
