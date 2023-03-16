@@ -80,9 +80,6 @@ function AuthProvider({ children }) {
       // check jwt expiration
       const decodedJWT = JSON.parse(window.atob(token.split(".")[1]))
 
-      console.log(decodedJWT)
-      console.log(decodedJWT.exp * 1000 < Date.now())
-
       if (decodedJWT.exp * 1000 < Date.now()) {
         logOut()
       } else {
@@ -96,7 +93,6 @@ function AuthProvider({ children }) {
       }
     }
 
-    console.log("tb passei aqui")
   }, [])
 
   return (

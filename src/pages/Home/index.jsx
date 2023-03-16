@@ -13,13 +13,11 @@ export function Home() {
 
   const isTokenExpired = checkTokenExpiration()
 
-
   const [moviesNotes, setMoviesNotes] = useState({})
   const [allMoviesNotes, setAllMoviesNotes] = useState([])
   const [filteredMovies, setFilteredMovies] = useState([])
   const [isLoading, setLoading] = useState(true)
   const [hasMovies, setHasMovies] = useState(false)
-
 
   function handleMovieDetails(movie_id) {
     navigate(`/movie/${movie_id}`)
@@ -49,7 +47,6 @@ export function Home() {
       }
 
       fetchData()
-      console.log("passei aqui")
     }
   }, [])
 
