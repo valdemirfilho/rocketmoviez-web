@@ -5,11 +5,12 @@ import { useState, useEffect } from "react";
 import { validateEmail } from "../../utils/validateEmail.js";
 import { api } from "../../services/api.js";
 
-import { Button, TextButton, Input } from "../../components";
+import { Button, TextButton, Input, Loading } from "../../components";
 
 export function SignIn() {
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
+  const [isLoading, setIsLoading] = useState(false);
 
   const { signIn } = useAuth();
 
@@ -23,10 +24,22 @@ export function SignIn() {
     fetchData();
   }, []);
 
-  function handleSignIn(e) {
+  async function handleSignIn(e) {
     e.preventDefault();
     if (!validateEmail(email)) return alert("Preencha um e-mail válido");
-    signIn({ email, password });
+
+    setIsLoading(true);
+    try {
+      await signIn({ email, password });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
