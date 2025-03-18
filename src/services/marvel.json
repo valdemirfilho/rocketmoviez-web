@@ -574,6 +574,42 @@
 			"chronology": 32,
 			"post_credit_scenes": 0,
 			"imdb_id": "tt6791350"
+		},
+		{
+      "id": 33,
+      "title": "The Marvels",
+      "release_date": "2023-11-10",
+      "box_office": "199706250",
+      "duration": 105,
+      "overview_en": "Carol Danvers AKA Captain Marvel has reclaimed her identity from the tyrannical Kree and taken revenge on the Supreme Intelligence. But unintended consequences see Carol shouldering the burden of a destabilized universe. When her duties send her to an anomalous wormhole linked to a Kree revolutionary, her powers become entangled with that of Jersey City super-fan Kamala Khan, aka Ms. Marvel, and Carol's estranged niece, now S.A.B.E.R. astronaut Captain Monica Rambeau.",
+      "overview": "Carol Danvers AKA Captain Marvel has reclaimed her identity from the tyrannical Kree and taken revenge on the Supreme Intelligence. But unintended consequences see Carol shouldering the burden of a destabilized universe. When her duties send her to an anomalous wormhole linked to a Kree revolutionary, her powers become entangled with that of Jersey City super-fan Kamala Khan, aka Ms. Marvel, and Carol's estranged niece, now S.A.B.E.R. astronaut Captain Monica Rambeau.",
+      "cover_url": "https://res.cloudinary.com/augustomarcelo/image/upload/v1679777423/mcuapi/gallery/Movies/the_marvels/posters/3.jpg",
+      "trailer_url": "https://youtu.be/wS_qbDztgVY",
+      "directed_by": "Nia DaCosta",
+      "phase": 5,
+      "saga": "Multiverse Saga",
+      "chronology": 33,
+      "post_credit_scenes": 1,
+      "imdb_id": "tt10676048",
+      "updated_at": "2024-02-12T13:20:31.910Z"
+    },
+		{
+			"id": 34,
+      "title": "Deadpool & Wolverine",
+      "release_date": "2024-07-26",
+      "box_office": "0",
+      "duration": 0,
+      "overview_en": null,
+      "overview": null,
+      "cover_url": "https://res.cloudinary.com/augustomarcelo/image/upload/v1707945621/mcuapi/gallery/Movies/deadpool_3/posters/2.jpg",
+      "trailer_url": "https://youtu.be/uJMCNJP2ipI",
+      "directed_by": "Shawn Levy",
+      "phase": 6,
+      "saga": "Multiverse Saga",
+      "chronology": 37,
+      "post_credit_scenes": 0,
+      "imdb_id": "tt6263850",
+      "updated_at": "2024-02-12T13:20:09.611Z"
 		}
 	],
 	"total": 40
