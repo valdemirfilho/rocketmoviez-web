@@ -1,29 +1,32 @@
-import { Container } from "./styles.js"
-import { FiMail, FiLock } from "react-icons/fi"
-import { useAuth } from "../../hooks/auth.hook.jsx"
-import { useState, useEffect } from "react"
-import { validateEmail } from "../../utils/validateEmail.js"
-import { api } from "../../services/api.js"
+import { Container } from "./styles.js";
+import { FiMail, FiLock } from "react-icons/fi";
+import { useAuth } from "../../hooks/auth.hook.jsx";
+import { useState, useEffect } from "react";
+import { validateEmail } from "../../utils/validateEmail.js";
+import { api } from "../../services/api.js";
 
-import { Button, TextButton, Input } from '../../components'
+import { Button, TextButton, Input } from "../../components";
 
 export function SignIn() {
-  const [email, setEmail] = useState(" ")
-  const [password, setPassword] = useState(" ")
+  const [email, setEmail] = useState(" ");
+  const [password, setPassword] = useState(" ");
 
-  const { signIn } = useAuth()
-  
-  useEffect(async () => {
-      console.log('wake up backend')
-      const response = await api.get("/healthz") 
-      const data = await response.data
-      console.log(data)
-  }, [])
+  const { signIn } = useAuth();
+
+  useEffect(() => {
+    console.log("wake up backend");
+    async function fetchData() {
+      const response = await api.get("/healthz");
+      const data = await response.data;
+      console.log(data);
+    }
+    fetchData();
+  }, []);
 
   function handleSignIn(e) {
-    e.preventDefault()
-    if (!validateEmail(email)) return alert("Preencha um e-mail válido")
-    signIn({ email, password })
+    e.preventDefault();
+    if (!validateEmail(email)) return alert("Preencha um e-mail válido");
+    signIn({ email, password });
   }
 
   return (
@@ -53,12 +56,7 @@ export function SignIn() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <Button
-            type="submit"
-            form="form-signin"
-            title="Entrar"
-            onClick={handleSignIn}
-          />
+          <Button type="submit" form="form-signin" title="Entrar" onClick={handleSignIn} />
 
           <TextButton name="Criar conta" to="/signup" />
         </form>
@@ -66,5 +64,5 @@ export function SignIn() {
 
       <div className="img-wrapper"></div>
     </Container>
-  )
+  );
 }
