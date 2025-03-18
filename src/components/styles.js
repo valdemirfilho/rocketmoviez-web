@@ -6,10 +6,10 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
+  background-color: ${({ theme }) => theme.BLACK};
 
   p {
-    color: ${({ theme }) => theme.COLORS.WHITE};
+    color: ${({ theme }) => theme.WHITE};
     margin-top: 1rem;
     font-size: 1.2rem;
   }
@@ -21,7 +21,7 @@ export const Container = styled.div`
   .spinner > div {
     width: 12px;
     height: 12px;
-    background-color: ${({ theme }) => theme.COLORS.PRIMARY};
+    background-color: ${({ theme }) => theme.PINK_SALMON_100};
     border-radius: 100%;
     display: inline-block;
     margin: 0 4px;
