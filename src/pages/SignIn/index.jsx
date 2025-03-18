@@ -3,6 +3,7 @@ import { FiMail, FiLock } from "react-icons/fi"
 import { useAuth } from "../../hooks/auth.hook.jsx"
 import { useState, useEffect } from "react"
 import { validateEmail } from "../../utils/validateEmail.js"
+import { api } from "../../services/api.js"
 
 import { Button, TextButton, Input } from '../../components'
 
