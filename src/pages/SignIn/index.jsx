@@ -1,7 +1,7 @@
 import { Container } from "./styles.js"
 import { FiMail, FiLock } from "react-icons/fi"
 import { useAuth } from "../../hooks/auth.hook.jsx"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { validateEmail } from "../../utils/validateEmail.js"
 
 import { Button, TextButton, Input } from '../../components'
@@ -11,6 +11,13 @@ export function SignIn() {
   const [password, setPassword] = useState(" ")
 
   const { signIn } = useAuth()
+  
+  useEffect(async () => {
+      console.log('wake up backend')
+      const response = await api.get("/healthz") 
+      const data = await response.data
+      console.log(data)
+  }, [])
 
   function handleSignIn(e) {
     e.preventDefault()
