@@ -2,6 +2,9 @@
     <img src="./rocket-moviez-screen.png" align="center" width="80%">
 </p>
 <p align="center"><h1 align="center">ROCKETMOVIEZ-WEB</h1></p>
+<p align="center">
+	<a href="https://rocketmoviez-web.vercel.app/">https://rocketmoviez-web.vercel.app</a>
+</p>
 <p align="center">Built with the tools and technologies:</p>
 <p align="center">
 	<img src="https://img.shields.io/badge/npm-CB3837.svg?style=for-the-badge&logo=npm&logoColor=white" alt="npm">
