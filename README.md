@@ -77,9 +77,3 @@ Run rocketmoviez-web using the following command:
 ```sh
 ❯ npm start
 ```
-
-## 🙌 Acknowledgments
-
-- List any resources, contributors, inspiration, etc. here.
-
----
